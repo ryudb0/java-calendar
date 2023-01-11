@@ -27,9 +27,16 @@ public class Calendar {
 		Scanner scanner = new Scanner(System.in);
 		Calendar cal = new Calendar();
 		
+		System.out.println("반복 횟수를 입력하세요.");
+		int[] repeat = new int[scanner.nextInt()];
+		
 		System.out.println("달을 입력하세요.");
-		int month = scanner.nextInt();
-		System.out.printf("%d월은 %d일까지 있습니다.%n", month, cal.getMaxDaysOfMonth(month));
+		for(int i=0; i<repeat.length; i++) {
+			repeat[i] = scanner.nextInt();
+		}
+		for(int i=0; i<repeat.length; i++) {
+			System.out.printf("%d월은 %d일까지 있습니다.%n", repeat[i], cal.getMaxDaysOfMonth(repeat[i]));
+		}
 	}
 
 }
