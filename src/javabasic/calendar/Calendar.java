@@ -19,24 +19,24 @@ public class Calendar {
 	}
 	
 	public static void main(String[] args) {
-//		숫자를 입력받아 해당하는 달의 초대 일수를 출력하는 프로그램
-//		int[] month = new int[12];
-//		month[0] =31; month[1] = 28; month[2] = 31; month[3] = 30; month[4] = 31; month[5] = 30;
-//		month[6] = 31; month[7] = 31; month[8] = 30; month[9] = 31; month[10] = 30; month[11] =31;
-		
-		Scanner scanner = new Scanner(System.in);
+		final String PROMPT = "cal>";
 		Calendar cal = new Calendar();
+		Scanner scanner = new Scanner(System.in);
 		
-		System.out.println("반복 횟수를 입력하세요.");
-		int[] repeat = new int[scanner.nextInt()];
+		while(true) {
+			System.out.println("월을 입력하세요.");
+			System.out.print(PROMPT);
+			int month = scanner.nextInt();
+			if(month == -1) {
+				System.out.println("Have a nice day~!");
+				break;
+			}
+			if(month > 12) {
+				continue;
+			}
+			System.out.printf("%d월은 %d일까지 있습니다.%n", month, cal.getMaxDaysOfMonth(month));
+		}
 		
-		System.out.println("달을 입력하세요.");
-		for(int i=0; i<repeat.length; i++) {
-			repeat[i] = scanner.nextInt();
-		}
-		for(int i=0; i<repeat.length; i++) {
-			System.out.printf("%d월은 %d일까지 있습니다.%n", repeat[i], cal.getMaxDaysOfMonth(repeat[i]));
-		}
 	}
-
+		
 }
