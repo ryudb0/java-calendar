@@ -1,12 +1,29 @@
 package javabasic.calendar;
 
-import java.util.Scanner;
 
 public class Calendar {
 	private static final int[] MAX_DAYS = { 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
+	private static final int[] LEAP_MAX_DAYS = { 31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
 	
-	public int getMaxDaysOfMonth(int month) {
-		return MAX_DAYS[month-1];
+	public boolean isLeapYear(int year) {
+		if(year % 4 == 0 && (year % 100 != 0 || year % 400 ==0)) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
+//	이렇게 안하고 기존메서드에 year를 추가해준다
+//	public int getMaxDaysOfLeapMonth(int month) {
+//		return LEAP_MAX_DAYS[month -1];
+//	}
+	
+	public int getMaxDaysOfMonth(int year, int month) {
+		if(isLeapYear(year)) {
+			return LEAP_MAX_DAYS[month-1];
+		} else {
+			return MAX_DAYS[month-1];
+		}
 	}
 	
 	public void printCalendar(int year, int month) {
@@ -20,8 +37,21 @@ public class Calendar {
 		System.out.println(" SU MO TU WE TH FR SA"); 
 		System.out.println("---------------------");
 		
-		int maxDay	= getMaxDaysOfMonth(month);
-	
+		int maxDay = getMaxDaysOfMonth(year, month);
+		
+//		내가 생각한 메서드
+//		if(isLeapYear(year)) {
+//			maxDay = getMaxDaysOfLeapMonth(month);
+//		} else {
+//			maxDay = getMaxDaysOfMonth(month);
+//		}
+//		윤년에대한 내 생각 잘못짬
+//		if(year % 100 !=0 || year % 4 ==0 || (year % 4 ==0 || year % 400 ==0)) {
+//			if(month == 2) {
+//				maxDay++;
+//			}
+//		}
+		
 		for(int i=1; i<=maxDay; i++) {
 			System.out.printf("%3d", i);
 			if(i % 7 == 0) {

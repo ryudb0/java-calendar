@@ -10,8 +10,12 @@ public class Prompt {
 		Scanner scanner = new Scanner(System.in);
 
 		while (true) {
+			System.out.println("년도를 입력하세요.");
+			System.out.print("YEAR> ");
+			int year = scanner.nextInt();
+			
 			System.out.println("월을 입력하세요.");
-			System.out.print(PROMPT);
+			System.out.print("MONTH> ");
 			int month = scanner.nextInt();
 			if (month == -1) {
 				System.out.println("Have a nice day~!");
@@ -20,7 +24,7 @@ public class Prompt {
 			if (month > 12) {
 				continue;
 			}
-			cal.printCalendar(2017, month);
+			cal.printCalendar(year, month);
 		}
 	}
 
