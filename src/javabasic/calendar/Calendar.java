@@ -2,10 +2,9 @@ package javabasic.calendar;
 
 
 public class Calendar {
-	private static final int[] MAX_DAYS = { 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
-	private static final int[] LEAP_MAX_DAYS = { 31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
-	private static final String[] WEEKDAY = { "SU", "MO", "TU", "WE", "TH", "FR", "SA"};
-	
+	private static final int[] MAX_DAYS = { 0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
+	private static final int[] LEAP_MAX_DAYS = { 0, 31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
+ 	
 	public boolean isLeapYear(int year) {
 		if(year % 4 == 0 && (year % 100 != 0 || year % 400 ==0)) {
 			return true;
@@ -14,55 +13,24 @@ public class Calendar {
 		}
 	}
 	
-//	이렇게 안하고 기존메서드에 year를 추가해준다
-//	public int getMaxDaysOfLeapMonth(int month) {
-//		return LEAP_MAX_DAYS[month -1];
-//	}
-	
 	public int getMaxDaysOfMonth(int year, int month) {
 		if(isLeapYear(year)) {
-			return LEAP_MAX_DAYS[month-1];
+			return LEAP_MAX_DAYS[month];
 		} else {
-			return MAX_DAYS[month-1];
+			return MAX_DAYS[month];
 		}
 	}
 	
-	public int parseDay(String week) {
-		int i =0;
-		while(true) {
-			if(WEEKDAY[i].equalsIgnoreCase(week)) {
-				return i;
-			}
-			i++;
-		}
-		
-	}
-	
-	public void printCalendar(int year, int month, int weekday) {
+	public void printCalendar(int year, int month) {
 		System.out.printf("   <<%4d년%3d월>>%n", year, month);
-//		System.out.println(" 1  2  3  4  5  6  7");
-//		System.out.println(" 8  9 10 11 12 13 14");
-//		System.out.println("15 16 17 18 19 20 21");
-//		System.out.println("22 23 24 25 26 27 28");
-//		System.out.println("29 30 31");
-		
 		System.out.println(" SU MO TU WE TH FR SA"); 
 		System.out.println("---------------------");
+
+		int weekday = getWeekDay(year, month, 1);
+		
+		
 		
 		int maxDay = getMaxDaysOfMonth(year, month);
-		
-//		내가 생각한 메서드
-//		if(isLeapYear(year)) {
-//			maxDay = getMaxDaysOfLeapMonth(month);
-//		} else {
-//			maxDay = getMaxDaysOfMonth(month);
-//		}
-//		윤년에대한 내 생각 잘못짬
-//		if(year % 100 !=0 || year % 4 ==0 || (year % 4 ==0 || year % 400 ==0)) {
-//			if(month == 2) {
-//				maxDay++;
-//			}
-//		}
 
 //		print blank space
 		int count = 1;
@@ -81,5 +49,38 @@ public class Calendar {
 		}
 		System.out.println();
 		System.out.println();
+	}
+
+	private int getWeekDay(int year, int month, int day) {
+		int syear = 1970;
+		final int STANDARD_WEEK_DAY = 4; //Thursday
+		
+		int count =0;
+		
+		for(int i = syear; i < year; i++) {
+			int delta = isLeapYear(i) ? 366 : 365;
+			count += delta;
+		}
+			
+		for(int i = 1; i < month; i++) {
+			int delta = getMaxDaysOfMonth(year, i);
+			count += delta;
+		}
+		
+		count += day - 1;
+		
+		int weekday = (count + STANDARD_WEEK_DAY) % 7;
+		
+		return weekday;
+	}
+	
+//	test code
+	public static void main(String[] args) {
+		Calendar cal = new Calendar();
+		System.out.println(cal.getWeekDay(1970, 1, 1) == 4);
+		System.out.println(cal.getWeekDay(1971, 1, 1) == 5);
+		System.out.println(cal.getWeekDay(1972, 1, 1) == 6);
+		
+		
 	}
 }
