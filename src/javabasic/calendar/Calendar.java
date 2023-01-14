@@ -4,6 +4,7 @@ package javabasic.calendar;
 public class Calendar {
 	private static final int[] MAX_DAYS = { 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
 	private static final int[] LEAP_MAX_DAYS = { 31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
+	private static final String[] WEEKDAY = { "SU", "MO", "TU", "WE", "TH", "FR", "SA"};
 	
 	public boolean isLeapYear(int year) {
 		if(year % 4 == 0 && (year % 100 != 0 || year % 400 ==0)) {
@@ -26,7 +27,18 @@ public class Calendar {
 		}
 	}
 	
-	public void printCalendar(int year, int month) {
+	public int parseDay(String week) {
+		int i =0;
+		while(true) {
+			if(WEEKDAY[i].equalsIgnoreCase(week)) {
+				return i;
+			}
+			i++;
+		}
+		
+	}
+	
+	public void printCalendar(int year, int month, int weekday) {
 		System.out.printf("   <<%4d년%3d월>>%n", year, month);
 //		System.out.println(" 1  2  3  4  5  6  7");
 //		System.out.println(" 8  9 10 11 12 13 14");
@@ -51,16 +63,23 @@ public class Calendar {
 //				maxDay++;
 //			}
 //		}
+
+//		print blank space
+		int count = 1;
+		for(int i = 0; i< weekday; i++) {
+			System.out.print("   ");
+			count++;
+		}
+		weekday = count;
 		
 		for(int i=1; i<=maxDay; i++) {
 			System.out.printf("%3d", i);
-			if(i % 7 == 0) {
+			if(weekday % 7 == 0) {
 				System.out.println();
 			}
+			weekday++;
 		}
 		System.out.println();
-		
-		
+		System.out.println();
 	}
-		
 }
