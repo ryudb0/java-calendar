@@ -1,10 +1,37 @@
 package javabasic.calendar;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.HashMap;
 
 public class Calendar {
 	private static final int[] MAX_DAYS = { 0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
 	private static final int[] LEAP_MAX_DAYS = { 0, 31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
  	
+	private HashMap<Date, String> planMap;
+	
+	Calendar() {
+		planMap = new HashMap<>();
+	}
+	
+	/**
+	 * 
+	 * @param date ex:"2015-04-01"
+	 * @param plan
+	 * @throws ParseException 
+	 */
+	public void registerPlan(String strDate, String plan) throws ParseException {
+		Date date = new SimpleDateFormat("yyyy-MM-dd").parse(strDate);
+		planMap.put(date, plan);
+	}
+	
+	public String searchPlan(String strDate) throws ParseException {
+		Date date = new SimpleDateFormat("yyyy-MM-dd").parse(strDate);
+		String plan = planMap.get(date);
+		return plan;
+	}
+	
 	public boolean isLeapYear(int year) {
 		if(year % 4 == 0 && (year % 100 != 0 || year % 400 ==0)) {
 			return true;
@@ -75,11 +102,16 @@ public class Calendar {
 	}
 	
 //	test code
-	public static void main(String[] args) {
+	public static void main(String[] args) throws ParseException {
 		Calendar cal = new Calendar();
 		System.out.println(cal.getWeekDay(1970, 1, 1) == 4);
 		System.out.println(cal.getWeekDay(1971, 1, 1) == 5);
 		System.out.println(cal.getWeekDay(1972, 1, 1) == 6);
+		System.out.println(cal.getWeekDay(1973, 1, 1) == 1);
+		System.out.println(cal.getWeekDay(1974, 1, 1) == 2);
+		
+		cal.registerPlan("2017-06-23", "Let's eat beef!");
+		System.out.println(cal.searchPlan("2017-06-23"));
 		
 		
 	}

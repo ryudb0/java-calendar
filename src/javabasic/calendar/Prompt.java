@@ -1,26 +1,22 @@
 package javabasic.calendar;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.text.ParseException;
 import java.util.Scanner;
 
 class ToDoList {
 	String plan = "";
-	
+
 	ToDoList(String plan) {
 		this.plan = plan;
 	}
-	
+
 	public String toString() {
 		return plan;
 	}
 }
 
 public class Prompt {
-	
-	
+
 	public void printMenu() {
 		System.out.println("+----------------------+");
 		System.out.println("| 1. 일정 등록           ");
@@ -29,88 +25,82 @@ public class Prompt {
 		System.out.println("| h. 도움말 q. 종료");
 		System.out.println("+----------------------+");
 	}
-	
-	public void runPrompt() { 
+
+	public void runPrompt() throws ParseException { 
+		printMenu();
 		
 		Scanner scanner = new Scanner(System.in);
-		String order ="";
-		printMenu();
-//		toDoList 객체를 생성한후 일정을 저장후 리스트에 추가
-//		리스트를 맵에 추가후 밸류보기
-//		객체1개 리스트1개 해시맵1개씩 해보자
-		ToDoList tdl;
-		ArrayList<ToDoList> tdlArr	= new ArrayList<>();
-		Map<String, Object> map = new HashMap<>();
+		Calendar cal = new Calendar();
 		
-		do {
+		while(true) {
 			System.out.println("명령 (1, 2, 3, h, q)");
 			System.out.print("> ");
-			order = scanner.next();
-			
-			if(order.equals("1")) {
-//				일정 등록
-				System.out.println("[일정 등록] 날짜를 입력하세요.");
-				System.out.print("> ");
-				String calendar = scanner.next();
-				System.out.println("일정을 입력하세요.");
-				System.out.print("> ");
-				tdl = new ToDoList(scanner.next());
-				tdlArr.add(tdl);
-				map.put(calendar, tdlArr);
-				System.out.println("일정이 등록되었습니다.");
-				
-			} else if(order.equals("2")) {
-//				일정 검색
-				System.out.println("[일정 검색] 날짜를 입력하세요.");
-				System.out.print("> ");
-				String calendar = scanner.next();
-				System.out.println(map.get(calendar)); 
-				
-				
-			} else if(order.equals("3")) {
-//				달력보기
-				Calendar cal = new Calendar();
-				
-				int year = 0;
-				int month = 0;
-
-				while (true) {
-					System.out.println("년도를 입력하세요.(exit: -1)");
-					System.out.print("YEAR> ");
-					year = scanner.nextInt();
-					if(year ==-1) {
-						break;
-					}
-					
-					System.out.println("월을 입력하세요.");
-					System.out.print("MONTH> ");
-					month = scanner.nextInt();
-					if (month < 1 || month > 12) {
-						System.out.println("잘못된 입력입니다.");
-						System.out.println();
-						continue;
-					}
-					
-					cal.printCalendar(year, month);
-				}
-				
-			} else if(order.equalsIgnoreCase("h")) {
-//				도움말
+			String cmd = scanner.next();
+			if(cmd.equals("1")) 
+				cmdRegister(scanner, cal);
+			else if(cmd.equals("2")) 
+				cmdSearch(scanner, cal);
+			else if(cmd.equals("3")) 
+				cmdCal(scanner, cal);
+			else if(cmd.equalsIgnoreCase("h")) 
 				printMenu();
-			}
-			
-		} while(!order.equalsIgnoreCase("q"));
-			
-		System.out.println("Have a nice day~!");
-		scanner.close();
+			else if(cmd.equalsIgnoreCase("q"))
+				break;
+		}
+		
+
+	System.out.println("Have a nice day~!");scanner.close();
+
+	}
+	
+	private void cmdRegister(Scanner s, Calendar c) throws ParseException {
+		System.out.println("[새 일정 등록]");
+		System.out.println("날짜를 입력하세요.(yyyy-MM-dd).");
+		System.out.print("> ");
+		String date = s.next();
+		s.nextLine(); // ignore one newline
+		
+		System.out.println("일정을 입력하세요.");
+		System.out.print("> ");
+		String text = s.nextLine();
+		c.registerPlan(date, text);
+		System.out.println("일정이 등록되었습니다.");
 	}
 
-	public static void main(String[] args) {
+	private void cmdSearch(Scanner s, Calendar c) throws ParseException {
+		System.out.println("[일정 검색]");
+		System.out.println("날짜를 입력하세요.(yyyy-MM-dd).");
+		System.out.print("> ");
+		String date = s.next();
+		System.out.println(c.searchPlan(date));
+		
+		
+	}
+
+	private void cmdCal(Scanner s, Calendar c) {
+		int year = 0;
+		int month = 0;
+
+		System.out.println("년도를 입력하세요.");
+		System.out.print("YEAR> ");
+		year = s.nextInt();
+		
+		System.out.println("월을 입력하세요.");
+		System.out.print("MONTH> ");
+		month = s.nextInt();
+		
+		if (month < 1 || month > 12) {
+			System.out.println("잘못된 입력입니다.");
+			return;
+		}
+		
+		c.printCalendar(year, month);
+	}
+
+
+	public static void main(String[] args) throws ParseException {
 		Prompt p = new Prompt();
 		p.runPrompt();
-		
-		
-		
-		
+
 	}
 }
