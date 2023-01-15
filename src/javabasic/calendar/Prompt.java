@@ -1,8 +1,22 @@
 package javabasic.calendar;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.Scanner;
 
+class ToDoList {
+	String plan = "";
+	
+	ToDoList(String plan) {
+		this.plan = plan;
+	}
+	
+	public String toString() {
+		return plan;
+	}
+}
 
 public class Prompt {
 	
@@ -21,9 +35,12 @@ public class Prompt {
 		Scanner scanner = new Scanner(System.in);
 		String order ="";
 		printMenu();
-		HashMap<String, String> toDoList = new HashMap<>();
-		
-		
+//		toDoList 객체를 생성한후 일정을 저장후 리스트에 추가
+//		리스트를 맵에 추가후 밸류보기
+//		객체1개 리스트1개 해시맵1개씩 해보자
+		ToDoList tdl;
+		ArrayList<ToDoList> tdlArr	= new ArrayList<>();
+		Map<String, Object> map = new HashMap<>();
 		
 		do {
 			System.out.println("명령 (1, 2, 3, h, q)");
@@ -37,18 +54,17 @@ public class Prompt {
 				String calendar = scanner.next();
 				System.out.println("일정을 입력하세요.");
 				System.out.print("> ");
-				String plan = scanner.next();
-				toDoList.put(calendar, plan);
+				tdl = new ToDoList(scanner.next());
+				tdlArr.add(tdl);
+				map.put(calendar, tdlArr);
 				System.out.println("일정이 등록되었습니다.");
 				
 			} else if(order.equals("2")) {
 //				일정 검색
-//				map에 저장된걸 arraylist로 받는다
 				System.out.println("[일정 검색] 날짜를 입력하세요.");
 				System.out.print("> ");
 				String calendar = scanner.next();
-				String plan = toDoList.get(calendar);
-				System.out.println(plan);
+				System.out.println(map.get(calendar)); 
 				
 				
 			} else if(order.equals("3")) {
