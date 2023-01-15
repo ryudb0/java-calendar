@@ -6,6 +6,7 @@ import java.util.Scanner;
 
 public class Prompt {
 	
+	
 	public void printMenu() {
 		System.out.println("+----------------------+");
 		System.out.println("| 1. 일정 등록           ");
@@ -21,6 +22,8 @@ public class Prompt {
 		String order ="";
 		printMenu();
 		HashMap<String, String> toDoList = new HashMap<>();
+		
+		
 		
 		do {
 			System.out.println("명령 (1, 2, 3, h, q)");
@@ -89,6 +92,9 @@ public class Prompt {
 	public static void main(String[] args) {
 		Prompt p = new Prompt();
 		p.runPrompt();
+		
+		
+		
 		
 	}
 }
