@@ -27,7 +27,7 @@ public class Calendar {
 		planMap.put(p.getDate(), p);
 		
 		File f = new File(SAVE_FILE);
-//		ddfㅇㅇㅇ내 잔디...ㅇㅇㅇ..
+//		ddfㅇㅇㅇ내 잔디...ㅇㅇㅇ.. now grass
 		
 	}
 	
