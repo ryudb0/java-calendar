@@ -36,13 +36,21 @@ public class Prompt {
 			System.out.println("명령 (1, 2, 3, h, q)");
 			System.out.print("> ");
 			String cmd = scanner.next();
-			if(cmd.equals("1")) 
-				cmdRegister(scanner, cal);
-			else if(cmd.equals("2")) 
-				cmdSearch(scanner, cal);
-			else if(cmd.equals("3")) 
-				cmdCal(scanner, cal);
-			else if(cmd.equalsIgnoreCase("h")) 
+			switch(cmd) {
+				case "1":{
+					cmdRegister(scanner, cal);
+					break;
+				}
+				case "2":{
+					cmdSearch(scanner, cal);
+					break;
+				}
+				case "3":{
+					cmdCal(scanner, cal);
+					break;
+				}
+			}
+			if(cmd.equalsIgnoreCase("h")) 
 				printMenu();
 			else if(cmd.equalsIgnoreCase("q"))
 				break;
