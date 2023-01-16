@@ -3,18 +3,6 @@ package javabasic.calendar;
 import java.text.ParseException;
 import java.util.Scanner;
 
-class ToDoList {
-	String plan = "";
-
-	ToDoList(String plan) {
-		this.plan = plan;
-	}
-
-	public String toString() {
-		return plan;
-	}
-}
-
 public class Prompt {
 
 	public void printMenu() {
@@ -80,8 +68,12 @@ public class Prompt {
 		System.out.println("날짜를 입력하세요.(yyyy-MM-dd).");
 		System.out.print("> ");
 		String date = s.next();
-		System.out.println(c.searchPlan(date));
-		
+		PlanItem plan = c.searchPlan(date);
+		if(plan != null) {
+			System.out.println(plan.getDetail()); 
+		} else {
+			System.out.println("일정이 없습니다.");
+		}
 		
 	}
 
